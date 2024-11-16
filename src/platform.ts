@@ -133,6 +133,12 @@ export class IKHomeBridgeHomebridgePlatform implements DynamicPlatformPlugin {
             this.log.info(`Ignoring ${device.label} because it is in the Ignore Devices list`);
             return;
           }
+          if (this.config.AllowedDevices &&
+          //this.config.IgnoreDevices.find(d => d.replaceAll(String.fromCharCode(8217), '\'').toLowerCase() === deviceName.toLowerCase())) {
+            !this.config.AllowedDevices.find(d => d.toLowerCase() === deviceName.toLowerCase())) {
+            this.log.info(`Ignoring ${device.label} because it is not in Allowed Devices list`);
+            return;
+          }
 
           if (!this.locationIDsToIgnore.find(locationID => device.locationId === locationID)) {
             this.log.debug('Pushing ' + device.label);
